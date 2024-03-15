@@ -38,6 +38,9 @@ int main( int argc, char* argv[] )
 	if( in.binary_mode == WRITE && mype == 0 )
 		binary_write(in, SD);
 
+	// Start Simulation Timer
+	omp_start = get_time();
+
 	// Move data to GPU
 	SimulationData GSD = move_simulation_data_to_device( in, mype, SD );
 
@@ -54,9 +57,6 @@ int main( int argc, char* argv[] )
 		center_print("SIMULATION", 79);
 		border_print();
 	}
-
-	// Start Simulation Timer
-	omp_start = get_time();
 
 	// Run simulation
 	if( in.simulation_method == EVENT_BASED )
