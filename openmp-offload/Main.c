@@ -68,6 +68,23 @@ int main( int argc, char* argv[] )
 		border_print();
 	}
 
+	// print no. of teams and threads per team
+        int n_threads, n_teams;
+
+        #pragma omp target teams map(from:n_teams)
+        {
+           n_teams = omp_get_num_teams(); 
+        }
+
+        #pragma omp target teams distribute parallel for map(from:n_threads) 
+        for( int i = 0; i < 1; i++ )
+        {
+           n_threads = omp_get_num_threads();
+        }
+
+        printf("There are  %d teams\n", n_teams);
+        printf("There are  %d threads per team\n", n_threads);
+
 	// Start Simulation Timer
 	omp_start = omp_get_wtime();
 
